@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="Karta">
+<meta name="theme-color" content="#000000">
+<title>Karta Prototypes</title>
+<link rel="stylesheet" href="./assets/index-GxfwVPjk.css">
+<style>
+:root { --page-bg: #f2f2f2; color-scheme: light; }
+body { background: var(--page-bg); }
+/* A dark screen (Card widget) must not show the light page colour in the
+   phone's bottom safe-area band under it. */
+:root:has(.proto-card-widget-theme, .proto-flow2-card-widget-theme) { --page-bg: var(--color-base-black); color-scheme: dark; }
+
+/* Phone-sized screens: drop the iPhone mockup and let the prototype fill
+   the real screen. The phone draws its own status bar and home bar, so the
+   mockup's copies are hidden; the screen keeps their space. */
+@media (max-width: 500px) {
+  .prototype-viewport { padding: 0; min-height: 100dvh; }
+  :root:has(.proto-card-widget-theme, .proto-flow2-card-widget-theme) .prototype-viewport { background: transparent; }
+  .prototype-device { padding: 0; border-radius: 0; box-shadow: none; background: transparent; width: 100%; }
+  .prototype-device__island,
+  .prototype-device__button,
+  .prototype-device__status,
+  .prototype-device__home-bar { display: none !important; }
+  .prototype-frame { width: 100%; min-height: 100dvh; border-radius: 0; }
+  .prototype-frame .proto-header__status { display: none; }
+  .prototype-frame .proto-screen,
+  .prototype-frame .proto-home-screen { height: 100dvh; min-height: 100dvh; }
+
+
+}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+  /* The viewer marks the page root with its own theme (data-theme="dark"
+     in dark mode), which switches the design system's dark tokens on for the
+     whole prototype app — the light Prototypes index turned white-on-light.
+     Screens that are dark (Card widget) set data-theme themselves, so the
+     viewer's attribute is removed here and kept off. */
+  (function () {
+    var root = document.documentElement;
+    function clear() { if (root.hasAttribute('data-theme')) root.removeAttribute('data-theme'); }
+    clear();
+    new MutationObserver(clear).observe(root, { attributes: true, attributeFilter: ['data-theme'] });
+  })();
+</script>
+<script type="module" src="./assets/index-ztNHJoyV.js"></script>
+</body>
+</html>
